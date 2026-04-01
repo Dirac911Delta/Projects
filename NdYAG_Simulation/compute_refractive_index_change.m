@@ -80,7 +80,7 @@ delta_n = zeros(N, N, Nz, 'single');
 
 % ---- 1-D radial arrays for the thermoelastic integrals -----------------
 Nr_1d   = N;
-r_1d    = linspace(0, p.L_grid/2, Nr_1d);   % [m]
+r_1d    = linspace(0, p.L_grid/2, Nr_1d)';  % [m]  column vector (N×1)
 dr_1d   = r_1d(2) - r_1d(1);
 
 % ---- Process each z-slice -----------------------------------------------
@@ -107,13 +107,13 @@ for kz = 1 : Nz
     % Cumulative radial average ⟨ΔT⟩_r(r) = (2/r²) ∫₀^r ΔT·r' dr'
     % Avoid division by zero at r=0
     r_safe  = max(r_1d, dr_1d/4);
-    int_rDT = cumtrapz(r_1d, DT_1d .* r_1d');       % ∫₀^r ΔT·r' dr'  [K·m²]
+    int_rDT = cumtrapz(r_1d, DT_1d .* r_1d);        % ∫₀^r ΔT·r' dr'  [K·m²]
     DT_avg_r= 2 ./ r_safe.^2 .* int_rDT;             % ⟨ΔT⟩_r  [K]
 
     % Full cross-section average ⟨ΔT⟩_R (constant with r)
     % Integrate only up to R_c
     in1d     = r_1d <= R_c;
-    DT_avg_R = 2/R_c^2 * trapz(r_1d(in1d), DT_1d(in1d) .* r_1d(in1d)');
+    DT_avg_R = 2/R_c^2 * trapz(r_1d(in1d), DT_1d(in1d) .* r_1d(in1d));
 
     % Thermoelastic stresses (MPa → Pa already in E_Y [Pa])
     prefactor = ath * E_Y / (1 - nu);

@@ -51,10 +51,14 @@ KZ  = sqrt(max(KZ2, 0));       % real kz only (evanescent terms zeroed)
 H   = exp(1i .* KZ .* dz);    % free-space transfer function [N×N]
 
 % ---- Half-step thin-lens mask -------------------------------------------
-%   amplitude factor: exp((-α+g)/2 · dz/2) applied twice = exp((-α+g)/2 · dz)
+%   amplitude factor: exp((-α+g) · |dz|/2) applied twice = exp((-α+g) · |dz|)
+%     Uses abs(dz) so gain and absorption are always positive-definite
+%     regardless of propagation direction (dz may be negative for backward pass).
 %   phase factor: exp(i·k₀·Δn · dz/2) applied twice = exp(i·k₀·Δn · dz)
-amp_half   = exp((-alpha_2d + gain_2d) .* (dz/2));   % [N×N] or scalar
-phase_half = exp(1i .* k0 .* delta_n_2d .* (dz/2));  % [N×N] or scalar
+%     Uses signed dz so that accumulated phase is correctly reversed for
+%     backward propagation.
+amp_half   = exp((-alpha_2d + gain_2d) .* (abs(dz)/2));  % [N×N] or scalar
+phase_half = exp(1i .* k0 .* delta_n_2d .* (dz/2));      % [N×N] or scalar
 mask_half  = amp_half .* phase_half;
 
 % ---- Step 1: first half-step thin-lens mask -----------------------------

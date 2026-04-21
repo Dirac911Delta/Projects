@@ -26,7 +26,7 @@ settings.Nd_concentration_wt_pct = 1.0;    % user-set [wt%]
 % 808 nm absorption handling (CRITICAL missing data path)
 settings.absorption_808_user = NaN;        % [1/m], user override if known
 settings.estimate_absorption_from_doping = true;
-settings.absorption_808_ref = 120;         % [1/m], USER-TUNABLE REFERENCE ASSUMPTION
+settings.absorption_808_ref = NaN;         % [1/m], REQUIRED if using proportional estimate
 settings.Nd_concentration_ref_wt_pct = 1.0;% [wt%], reference for proportional estimate
 
 % Thermal properties (if not in material table)
@@ -84,4 +84,4 @@ post = post_processing(material, settings, results);
 fprintf('\nMaterial: %s\n', material.name);
 fprintf('alpha_808 used: %.6g 1/m\n', pump.alpha_808);
 fprintf('Final peak temperature: %.2f K\n', post.peak_temperature_K(end));
-fprintf('Estimated thermal lens power proxy (dn/dT * dT/dr max): %.3e 1/m\n', post.thermal_lens_proxy_1pm);
+fprintf('Estimated thermal lens power proxy (dn/dT * dT/dr max): %.3e 1/m\n', post.thermal_lens_proxy_per_m);

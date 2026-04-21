@@ -99,7 +99,7 @@ for n = 2:nt
     Aeff = A;
     if ~isempty(fixedIdx)
         Aeff(fixedIdx, :) = 0;
-        Aeff(fixedIdx + (fixedIdx - 1) * N) = 1;
+        Aeff(fixedIdx, fixedIdx) = speye(numel(fixedIdx));
         rhs(fixedIdx) = fixedValue(fixedIdx);
     end
 

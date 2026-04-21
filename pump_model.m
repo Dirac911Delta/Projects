@@ -40,7 +40,10 @@ phi_r = exp(-2 * (r / w).^order);
 % Normalize to pump power within simulation aperture
 integrand = 2 * pi * r .* phi_r;
 P_shape = trapz(r, integrand);
-I0 = P / max(P_shape, eps);
+if ~isfinite(P_shape) || P_shape <= 0
+    error('Invalid pump normalization integral. Check pump radius, grid, and geometry settings.');
+end
+I0 = P / P_shape;
 I_r = I0 * phi_r;                         % [W/m^2]
 
 % Axial Beer-Lambert attenuation and volumetric heating

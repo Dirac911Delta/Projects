@@ -69,6 +69,11 @@ if sum(valid) == 0
 elseif sum(valid) == 1
     tau = lifetime_s(valid) * ones(size(query));
 else
-    tau = interp1(doping_wt_pct(valid), lifetime_s(valid), query, 'pchip', 'extrap');
+    x = doping_wt_pct(valid);
+    y = lifetime_s(valid);
+    tau = interp1(x, y, query, 'pchip', NaN);
+    if any(query < min(x) | query > max(x), 'all')
+        warning('Lifetime interpolation queried outside measured doping range; returning NaN out-of-range.');
+    end
 end
 end

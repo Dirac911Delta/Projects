@@ -59,5 +59,5 @@ post = struct();
 post.peak_temperature_K = peakT;
 post.radial_gradient_max_Kpm = radial_grad_max;
 post.axial_profile_final_K = axial_profile_final;
-post.thermal_lens_proxy_1pm = lens_proxy;
+post.thermal_lens_proxy_per_m = lens_proxy;
 end

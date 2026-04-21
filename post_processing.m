@@ -121,7 +121,8 @@ if ~isnan(E_mod) && ~isnan(nu) && ~isnan(alpha_CTE)
     alpha_E = E_mod * alpha_CTE / (1 - nu);     % [Pa/K]
     Tr_stress = T(:, jmid, end);                % T(r) at mid-plane, final time
 
-    T_bar = 2 / R^2 * trapz(r, Tr_stress .* r);  % area-average temperature
+    R_sq = R^2;   % precompute constant
+    T_bar = 2 / R_sq * trapz(r, Tr_stress .* r);  % area-average temperature
 
     % T_bar_inner(r): cumulative radial average using cumtrapz
     % T_bar_inner(r) = (2/r^2) * integral_0^r T*r' dr'

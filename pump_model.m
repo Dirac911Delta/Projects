@@ -140,7 +140,8 @@ B_integral = NaN;
 n2_esu_val = material.nonlinear_n2_esu;   % [1e-13 e.s.u.], upper bound from table
 n0 = material.refractive_index_1053nm;
 if ~isnan(n2_esu_val) && ~isnan(n0) && n0 > 0
-    n2_SI = n2_esu_val * 1e-13 * (4.19e-7 / n0);  % [m²/W], approximate conversion
+    n2_SI = n2_esu_val * 1e-13 * (4.19e-7 / n0);  % [m²/W] CGS-to-SI conversion factor
+                                                    % 4.19e-7 ≈ c/(40π) in SI units
     B_integral = (2 * pi / lambda_pump) * n2_SI * I0 * L;
 end
 

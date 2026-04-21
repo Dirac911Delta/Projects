@@ -48,7 +48,7 @@ settings.apply_fresnel_reflection_loss = false;
 settings.use_realistic_thermal_props = true;
 
 % --- Boundary conditions ----------------------------------------------- %
-settings.heat_sink_temperature_K = 293.15;        % [K]  298.15 ≈ 25°C
+settings.heat_sink_temperature_K = 293.15;        % [K]  293.15 = 20°C
 settings.bc_z0.type  = 'insulated';               % 'insulated' | 'fixed'
 settings.bc_z0.value_K = settings.heat_sink_temperature_K;
 settings.bc_zL.type  = 'insulated';
@@ -148,7 +148,7 @@ fprintf('  Lifetime at %.2f wt%%          : %.4g s\n', ...
 fprintf('  Nd3+ concentration (tabulated): %.4g ions/m³\n', material.Nd_concentration);
 fprintf('  Transition temperature        : %.0f °C\n', material.transition_temperature_C);
 fprintf('  Softening temperature         : %.0f °C\n', material.softening_temperature_C);
-fprintf('  Young''s modulus               : %.4g Pa\n', material.youngs_modulus_Pa);
+fprintf('  Youngs modulus                : %.4g Pa\n', material.youngs_modulus_Pa);
 fprintf('  Poisson''s ratio               : %.2f\n', material.poissons_ratio);
 fprintf('  Fracture toughness            : %.2f MPa·m^0.5\n', material.fracture_toughness_MPa_sqrtm);
 fprintf('  Nonlinear index n2            : %.4g x1e-13 e.s.u.\n', material.nonlinear_n2_esu);

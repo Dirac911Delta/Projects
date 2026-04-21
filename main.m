@@ -21,13 +21,13 @@ settings.crystal_diameter_m = 10e-3;       % fixed by statement [m]
 settings.crystal_thickness_m = 20e-3;      % user-defined [m]
 
 % Doping inputs (for lifetime lookup/override and absorption estimate)
-settings.Nd_concentration_wt_pct = 1.0;    % user-set [wt%%]
+settings.Nd_concentration_wt_pct = 1.0;    % user-set [wt%]
 
 % 808 nm absorption handling (CRITICAL missing data path)
 settings.absorption_808_user = NaN;        % [1/m], user override if known
 settings.estimate_absorption_from_doping = true;
 settings.absorption_808_ref = 120;         % [1/m], USER-TUNABLE REFERENCE ASSUMPTION
-settings.Nd_concentration_ref_wt_pct = 1.0;% [wt%%], reference for proportional estimate
+settings.Nd_concentration_ref_wt_pct = 1.0;% [wt%], reference for proportional estimate
 
 % Thermal properties (if not in material table)
 settings.thermal_conductivity_user = NaN;  % [W/(m*K)]

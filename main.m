@@ -16,7 +16,7 @@ settings.use_realistic_thermal_props = true;
 % Pump and geometry
 settings.pump_power_W = 50;                % [W]
 settings.pump_radius_m = 0.6e-3;           % super-Gaussian radius w [m]
-settings.supergaussian_order = 6;          % required by statement
+settings.supergaussian_order = 6;          % super-Gaussian order from problem definition
 settings.crystal_diameter_m = 10e-3;       % fixed by statement [m]
 settings.crystal_thickness_m = 20e-3;      % user-defined [m]
 

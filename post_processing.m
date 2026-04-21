@@ -38,7 +38,7 @@ figure('Name','Temperature contour (final time)','Color','w');
 contourf(r*1e3, z*1e3, T(:,:,end).', 40, 'LineColor', 'none');
 colorbar;
 xlabel('r [mm]'); ylabel('z [mm]');
-title(sprintf('T(r,z,t_{end}) at t = %.3f s', t(end)));
+title(sprintf('T(r,z,t(end)) at t = %.3f s', t(end)));
 
 figure('Name','Peak temperature vs time','Color','w');
 plot(t, peakT, 'LineWidth', 1.5);

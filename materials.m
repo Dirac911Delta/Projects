@@ -72,10 +72,11 @@ else
     x = doping_wt_pct(valid);
     y = lifetime_s(valid);
     tau = interp1(x, y, query, 'pchip', NaN);
-    out = query(query < min(x) | query > max(x));
-    if ~isempty(out)
+    out_mask = (query < min(x)) | (query > max(x));
+    out_values = query(out_mask);
+    if ~isempty(out_values)
         warning('Lifetime query outside measured range [%.4g, %.4g] wt%%. Out-of-range values return NaN. Queried: %s', ...
-            min(x), max(x), mat2str(out));
+            min(x), max(x), mat2str(out_values));
     end
 end
 end

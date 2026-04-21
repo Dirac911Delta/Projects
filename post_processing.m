@@ -86,9 +86,11 @@ parabolic_C = NaN;
 if ~isnan(W0)
     Tr_mid = T(:, jmid, end);
     % Fit T(r) = T0 + C*r^2 over the inner third of the aperture.
-    % The inner third is used because thermal lensing is dominated by
-    % the near-axis parabolic region; using the full aperture would include
-    % the steep edge where the fit deviates from parabolic.
+    % The inner third targets the near-axis parabolic region where the
+    % paraxial thermal lens approximation is valid. Beyond this region
+    % the T(r) profile deviates from parabolic due to the Gaussian/super-
+    % Gaussian pump cutoff (see, e.g., Innocenzi et al., J. Appl. Phys.
+    % 75, 4991, 1994 for end-pumped thermal lens analysis).
     PARABOLIC_FIT_FRACTION = 1/3;
     fit_pts = max(3, round(nr * PARABOLIC_FIT_FRACTION));
     r_fit = r(1:fit_pts);

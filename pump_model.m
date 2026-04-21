@@ -140,9 +140,10 @@ B_integral = NaN;
 n2_esu_val = material.nonlinear_n2_esu;   % [1e-13 e.s.u.], upper bound from table
 n0 = material.refractive_index_1053nm;
 if ~isnan(n2_esu_val) && ~isnan(n0) && n0 > 0
-    % Named conversion constant from Hellwarth (1977) for CGS e.s.u. to SI [m²/W]
-    N2_CGS_TO_SI = 4.19e-7;   % [m²/W per e.s.u.], approximate (Hellwarth 1977)
-    n2_SI = n2_esu_val * 1e-13 * (N2_CGS_TO_SI / n0);  % [m²/W] CGS-to-SI conversion
+    % Conversion factor: Hellwarth R.W. (1977) Progress in Quantum Electronics 5, 1-68.
+    % n2_SI [m²/W] ≈ n2_esu [e.s.u.] × N2_HELLWARTH_CGS_SI / n0  (approximate)
+    N2_HELLWARTH_CGS_SI = 4.19e-7;   % [m²/W per e.s.u.], from Hellwarth (1977)
+    n2_SI = n2_esu_val * 1e-13 * (N2_HELLWARTH_CGS_SI / n0);  % [m²/W]
     B_integral = (2 * pi / lambda_pump) * n2_SI * I0 * L;
 end
 

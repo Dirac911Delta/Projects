@@ -63,6 +63,8 @@ index-parallel vector layout. Set any unknown field to `NaN`. Populate
 
 - Quantum-defect fraction `η_heat = 1 − λ_pump/λ_fl` (Stokes limit; excludes non-radiative QE)
 - Fresnel loss uses `n(1053 nm)` as proxy for `n(808 nm)` (≈ 0.5–1% error for phosphate glass)
-- B-integral conversion `n₂[m²/W] ≈ n₂[1e−13 e.s.u.] × 1e−13 × 4.19e−7/n₀` (Hellwarth 1977)
+- B-integral conversion `n₂[m²/W] ≈ n₂[1e−13 e.s.u.] × 1e−13 × 4.19e−7/n₀`  
+  Reference: Hellwarth R.W. (1977) *Progress in Quantum Electronics* **5**, 1–68.
+- Thermal lens parabolic fit over inner 1/3 of aperture; see Innocenzi et al., *J. Appl. Phys.* **75**, 4991 (1994)
 - Thermal stress uses plane-stress Timoshenko cylinder formula; valid for free-ended rods
 - Generic thermal fallbacks (k = 0.80 W/(m·K), cp = 800 J/(kg·K), ρ = 2700 kg/m³) used only when table value is NaN

@@ -3,7 +3,7 @@ function material = materials(materialName)
 % Material database for Nd-doped laser glasses from provided tables.
 % Missing table values are stored as NaN.
 % SI conversion notes:
-%   dn/dT values in source are [1e-6 / degC] -> multiplied by 1e-6 [1/K].
+%   dn/dT values in source are [1e-6 / °C] -> multiplied by 1e-6 [1/K].
 
 db = build_database();
 idx = find(strcmpi({db.name}, materialName), 1);
@@ -72,8 +72,10 @@ else
     x = doping_wt_pct(valid);
     y = lifetime_s(valid);
     tau = interp1(x, y, query, 'pchip', NaN);
-    if any(query < min(x) | query > max(x), 'all')
-        warning('Lifetime interpolation queried outside measured doping range; returning NaN out-of-range.');
+    out = query(query < min(x) | query > max(x));
+    if ~isempty(out)
+        warning('Lifetime query outside measured range [%.4g, %.4g] wt%%. Out-of-range values return NaN. Queried: %s', ...
+            min(x), max(x), mat2str(out));
     end
 end
 end

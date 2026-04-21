@@ -27,7 +27,8 @@ a = k / (rho * cp);
 S = Q / (rho * cp);  % [K/s]
 
 % Sparse Laplacian operator L
-Lop = spalloc(N, N, 7*N);
+MAX_STENCIL_WIDTH = 7; % center + up to 6 neighbors for interior axisymmetric stencil
+Lop = spalloc(N, N, MAX_STENCIL_WIDTH * N);
 
 for j = 1:nz
     for i = 1:nr

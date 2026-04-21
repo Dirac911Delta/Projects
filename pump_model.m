@@ -23,8 +23,12 @@ if ~isnan(settings.absorption_808_user)
 elseif ~isnan(material.absorption_808)
     alpha = material.absorption_808;
 elseif settings.estimate_absorption_from_doping
-    if isnan(settings.absorption_808_ref) || isnan(settings.Nd_concentration_ref_wt_pct) || isnan(settings.Nd_concentration_wt_pct)
-        error('Cannot estimate alpha_808: missing reference or concentration inputs.');
+    missing = {};
+    if isnan(settings.absorption_808_ref), missing{end+1} = 'absorption_808_ref'; end %#ok<AGROW>
+    if isnan(settings.Nd_concentration_ref_wt_pct), missing{end+1} = 'Nd_concentration_ref_wt_pct'; end %#ok<AGROW>
+    if isnan(settings.Nd_concentration_wt_pct), missing{end+1} = 'Nd_concentration_wt_pct'; end %#ok<AGROW>
+    if ~isempty(missing)
+        error('Cannot estimate alpha_808. Missing fields: %s', strjoin(missing, ', '));
     end
     % Assumption: alpha_808 proportional to Nd3+ concentration
     alpha = settings.absorption_808_ref * (settings.Nd_concentration_wt_pct / settings.Nd_concentration_ref_wt_pct);

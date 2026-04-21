@@ -76,6 +76,13 @@ if any(isnan([material.thermal_conductivity, material.specific_heat, material.de
     error('Thermal properties are incomplete. Provide user values or enable realistic defaults.');
 end
 
+if settings.estimate_absorption_from_doping && isnan(settings.absorption_808_user) && isnan(material.absorption_808)
+    if any(isnan([settings.absorption_808_ref, settings.Nd_concentration_ref_wt_pct, settings.Nd_concentration_wt_pct]))
+        error(['Missing absorption-estimation inputs in main.m: set absorption_808_ref, ', ...
+               'Nd_concentration_ref_wt_pct, and Nd_concentration_wt_pct, or provide absorption_808_user.']);
+    end
+end
+
 pump = pump_model(material, settings);
 results = heat_solver(material, pump, settings);
 post = post_processing(material, settings, results);

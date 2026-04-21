@@ -85,7 +85,7 @@ end
 eta_heat = 1.0;   % default: all absorbed energy becomes heat
 if settings.apply_quantum_defect
     lambda_fl = material.fluorescence_wavelength;   % [m]
-    if ~isnan(lambda_fl) && lambda_fl > lambda_pump
+    if ~isnan(lambda_fl) && lambda_fl > lambda_pump && lambda_fl > 0
         eta_heat = 1 - lambda_pump / lambda_fl;
     else
         warning(['apply_quantum_defect is true but fluorescence_wavelength is NaN or ', ...
@@ -140,8 +140,9 @@ B_integral = NaN;
 n2_esu_val = material.nonlinear_n2_esu;   % [1e-13 e.s.u.], upper bound from table
 n0 = material.refractive_index_1053nm;
 if ~isnan(n2_esu_val) && ~isnan(n0) && n0 > 0
-    n2_SI = n2_esu_val * 1e-13 * (4.19e-7 / n0);  % [m²/W] CGS-to-SI conversion factor
-                                                    % 4.19e-7 ≈ c/(40π) in SI units
+    % Named conversion constant from Hellwarth (1977) for CGS e.s.u. to SI [m²/W]
+    N2_CGS_TO_SI = 4.19e-7;   % [m²/W per e.s.u.], approximate (Hellwarth 1977)
+    n2_SI = n2_esu_val * 1e-13 * (N2_CGS_TO_SI / n0);  % [m²/W] CGS-to-SI conversion
     B_integral = (2 * pi / lambda_pump) * n2_SI * I0 * L;
 end
 

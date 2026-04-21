@@ -85,8 +85,12 @@ thermal_lens_focal_power = NaN;        % [1/m]
 parabolic_C = NaN;
 if ~isnan(W0)
     Tr_mid = T(:, jmid, end);
-    % Fit T(r) = T0 + C*r^2 over the inner third of the aperture (near-axis)
-    fit_pts = max(3, round(nr / 3));
+    % Fit T(r) = T0 + C*r^2 over the inner third of the aperture.
+    % The inner third is used because thermal lensing is dominated by
+    % the near-axis parabolic region; using the full aperture would include
+    % the steep edge where the fit deviates from parabolic.
+    PARABOLIC_FIT_FRACTION = 1/3;
+    fit_pts = max(3, round(nr * PARABOLIC_FIT_FRACTION));
     r_fit = r(1:fit_pts);
     T_fit = Tr_mid(1:fit_pts);
     p = polyfit(r_fit.^2, T_fit, 1);    % p(1) = C, p(2) = T0
@@ -129,10 +133,11 @@ if ~isnan(E_mod) && ~isnan(nu) && ~isnan(alpha_CTE)
     cum_integrand = Tr_stress .* r;
     cum_integral  = cumtrapz(r, cum_integrand);   % integral from 0 to r_i
 
+    r_sq = r.^2;              % precompute r² for the loop below
     T_bar_inner = NaN(nr, 1);
     T_bar_inner(1) = Tr_stress(1);   % L'Hopital limit at r=0 → T(0)
     for i = 2:nr
-        T_bar_inner(i) = 2 / r(i)^2 * cum_integral(i);
+        T_bar_inner(i) = 2 / r_sq(i) * cum_integral(i);
     end
 
     sigma_r_Pa     = alpha_E * (T_bar - T_bar_inner);

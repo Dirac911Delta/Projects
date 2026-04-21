@@ -28,7 +28,7 @@ function material = materials(materialName)
 db = build_database();
 idx = find(strcmpi({db.name}, materialName), 1);
 if isempty(idx)
-    error('Unknown material "%s". Valid names: N31 N41 N51 NAP2 NAP4 NF1 NF2 NSG2', materialName);
+    error('Unknown material "%s". Valid names: %s', materialName, strjoin({db.name}, ' '));
 end
 material = db(idx);
 end

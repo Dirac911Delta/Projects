@@ -112,6 +112,10 @@ if any(isnan([material.thermal_conductivity, material.specific_heat, material.de
            material.name);
 end
 
+if settings.crystal_thickness_m <= 0
+    error('settings.crystal_thickness_m must be a positive value.');
+end
+
 % --- Validate absorption estimation inputs before calling pump_model --- %
 if settings.estimate_absorption_from_doping && ...
    isnan(settings.absorption_808_user) && isnan(material.absorption_808)
